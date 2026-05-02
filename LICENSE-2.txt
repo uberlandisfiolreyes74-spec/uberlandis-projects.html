@@ -1,0 +1,10 @@
+Copyright (c) 2025 Uberlandis Fiol Reyes
+All rights reserved.
+
+No part of this repository — including but not limited to source code,
+HTML, research frameworks (SMA-03 v3, MSCA v6, EGDS), mathematical models,
+formulas, methodologies, and associated documentation — may be reproduced,
+distributed, modified, or used in any form or by any means, electronic or
+mechanical, without the explicit prior written permission of the author.
+
+For permissions, collaborations, or licensing inquiries, contact the author directly.

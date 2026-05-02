@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Uberlandis Fiol Reyes — Decision Science & AI Research</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #080c14;
+      --bg2: #0d1321;
+      --surface: #111827;
+      --border: rgba(255,255,255,0.07);
+      --text: #e8eaf0;
+      --muted: #6b7280;
+      --accent: #3b82f6;
+      --accent2: #f59e0b;
+      --accent3: #10b981;
+      --glow: rgba(59,130,246,0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── GRID NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 70% 10%, rgba(59,130,246,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 10% 80%, rgba(245,158,11,0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.25rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(12px);
+      background: rgba(8,12,20,0.8);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 0 4rem;
+      gap: 4rem;
+    }
+
+    .hero-left { padding-top: 6rem; }
+
+    .hero-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.35s forwards;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 440px;
+      line-height: 1.75;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.5s forwards;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.65s forwards;
+    }
+
+    .btn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.75rem 1.75rem;
+      border-radius: 3px;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #2563eb;
+      box-shadow: 0 0 24px rgba(59,130,246,0.4);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      color: var(--text);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    /* ── HERO RIGHT: METRICS CARD ── */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding-top: 6rem;
+      opacity: 0;
+      animation: fadeLeft 0.8s 0.5s forwards;
+    }
+
+    .metric-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .metric-card:hover {
+      border-color: rgba(59,130,246,0.3);
+      box-shadow: 0 0 20px var(--glow);
+    }
+
+    .metric-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .metric-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .metric-value.blue { color: var(--accent); }
+    .metric-value.amber { color: var(--accent2); }
+    .metric-value.green { color: var(--accent3); }
+
+    .metric-badge {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+      letter-spacing: 0.08em;
+    }
+
+    .badge-blue { background: rgba(59,130,246,0.15); color: var(--accent); }
+    .badge-amber { background: rgba(245,158,11,0.15); color: var(--accent2); }
+    .badge-green { background: rgba(16,185,129,0.15); color: var(--accent3); }
+
+    /* ── SECTION BASE ── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 4rem;
+    }
+
+    .section-tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 300;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.75;
+      margin-bottom: 3rem;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ── FRAMEWORK GRID ── */
+    .frameworks-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 4rem;
+    }
+
+    .framework-card {
+      background: var(--bg2);
+      padding: 2rem;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .framework-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .framework-card.fc-blue::before { background: var(--accent); }
+    .framework-card.fc-amber::before { background: var(--accent2); }
+    .framework-card.fc-green::before { background: var(--accent3); }
+
+    .framework-card:hover { background: var(--surface); }
+    .framework-card:hover::before { opacity: 1; }
+
+    .fc-id {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .fc-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .fc-name.blue { color: var(--accent); }
+    .fc-name.amber { color: var(--accent2); }
+    .fc-name.green { color: var(--accent3); }
+
+    .fc-full {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .fc-desc {
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+      opacity: 0.8;
+    }
+
+    .fc-stat {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+
+    /* ── LOCKGUARD FEATURED ── */
+    .lockguard-hero {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lockguard-hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .lg-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .lg-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 20px; height: 1px;
+      background: var(--accent);
+    }
+
+    .lg-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem;
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .lg-name span { color: var(--accent); font-style: italic; }
+
+    .lg-desc {
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+
+    .lg-features {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .lg-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .lg-feature-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 0.55em;
+      flex-shrink: 0;
+    }
+
+    .lg-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .lg-metric {
+      background: var(--bg2);
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .lg-metric-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .lg-metric-val.amber { color: var(--accent2); }
+    .lg-metric-val.green { color: var(--accent3); }
+    .lg-metric-val.white { color: var(--text); }
+
+    .lg-metric-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .tier-row {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+    }
+
+    .tier {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      padding: 0.25rem 0.6rem;
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+
+    .t-green { background: rgba(16,185,129,0.15); color: var(--accent3); }
+    .t-yellow { background: rgba(234,179,8,0.15); color: #eab308; }
+    .t-orange { background: rgba(249,115,22,0.15); color: #f97316; }
+    .t-red { background: rgba(239,68,68,0.15); color: #ef4444; }
+    .t-critical { background: rgba(168,85,247,0.15); color: #a855f7; }
+
+    /* ── PUBLICATIONS ── */
+    .pubs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .pub-item {
+      background: var(--bg2);
+      padding: 1.5rem 2rem;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1.5rem;
+      align-items: center;
+      transition: background 0.2s;
+    }
+
+    .pub-item:hover { background: var(--surface); }
+
+    .pub-index {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      width: 2rem;
+      text-align: right;
+    }
+
+    .pub-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      margin-bottom: 0.25rem;
+    }
+
+    .pub-meta {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+
+    .pub-status {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
+    .s-submitted { background: rgba(59,130,246,0.15); color: var(--accent); }
+    .s-preprint { background: rgba(245,158,11,0.15); color: var(--accent2); }
+    .s-prep { background: rgba(107,114,128,0.15); color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-left {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+    }
+
+    .footer-right {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeLeft {
+      from { opacity: 0; transform: translateX(30px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.5rem; }
+      .hero { grid-template-columns: 1fr; padding: 0 1.5rem; min-height: auto; padding-top: 6rem; padding-bottom: 3rem; }
+      .hero-right { padding-top: 0; }
+      section { padding: 4rem 1.5rem; }
+      .frameworks-grid { grid-template-columns: 1fr; }
+      .lockguard-hero { grid-template-columns: 1fr; }
+      .pub-item { grid-template-columns: auto 1fr; }
+      .pub-status { display: none; }
+      footer { flex-direction: column; gap: 1.5rem; padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">UFR / Research</div>
+    <ul class="nav-links">
+      <li><a href="#frameworks">Frameworks</a></li>
+      <li><a href="#lockguard">LockGuard AI</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <p class="hero-tag">Decision Science · Quantitative Modeling · AI</p>
+      <h1 class="hero-title">
+        Measuring the<br/><em>cost of commitment</em><br/>in organizational decisions
+      </h1>
+      <p class="hero-sub">
+        Independent researcher developing proprietary frameworks for irreversibility analysis,
+        probabilistic option evaluation, and execution-gated decision governance.
+      </p>
+      <div class="hero-cta">
+        <a href="#lockguard" class="btn btn-primary">LockGuard AI →</a>
+        <a href="#frameworks" class="btn btn-ghost">View Frameworks</a>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="metric-card">
+        <div>
+          <div class="metric-label">II-Score Validation Accuracy</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <span class="metric-value green">87.5%</span>
+          <span class="metric-badge badge-green">N=120</span>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div>
+          <div class="metric-label">Crisis Perception Variance Explained</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <span class="metric-value amber">79%</span>
+          <span class="metric-badge badge-amber">R²</span>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div>
+          <div class="metric-label">ML Ensemble Accuracy (SMA-03 v4)</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <span class="metric-value blue">97.2%</span>
+          <span class="metric-badge badge-blue">GB Model</span>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div>
+          <div class="metric-label">Integrated Frameworks</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <span class="metric-value" style="color:var(--text)">3</span>
+          <span class="metric-badge" style="background:rgba(255,255,255,0.07);color:var(--muted)">SMA · MSCA · EGDS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- FRAMEWORKS -->
+  <section id="frameworks">
+    <p class="section-tag">Proprietary Frameworks</p>
+    <h2 class="section-title">Three integrated systems.<br/>One coherent theory.</h2>
+    <p class="section-desc">
+      SMA-03, MSCA v6, and EGDS form a unified decision science stack —
+      from risk measurement to option evaluation to temporal governance.
+    </p>
+
+    <div class="frameworks-grid">
+      <!-- SMA-03 -->
+      <div class="framework-card fc-blue">
+        <div class="fc-id">Framework 01</div>
+        <div class="fc-name blue">SMA-03 v3</div>
+        <div class="fc-full">Irreversibility Index · Lock-in Risk Measurement</div>
+        <div class="fc-desc">
+          Quantifies organizational lock-in through the II-Score (0–1 range),
+          five risk tiers, and temporal decay parameter λ. Empirically validated
+          on 120 organizational decisions. Integrates ODE modeling and ML ensemble
+          classification for real-time risk assessment.
+        </div>
+        <div class="fc-stat">
+          KEY FORMULA: E[V]_adjusted = E[V] / (1 + II²)
+        </div>
+      </div>
+
+      <!-- MSCA v6 -->
+      <div class="framework-card fc-amber">
+        <div class="fc-id">Framework 02</div>
+        <div class="fc-name amber">MSCA v6</div>
+        <div class="fc-full">Monte Carlo Scenario Analysis · Option Evaluation</div>
+        <div class="fc-desc">
+          Probabilistic option evaluation through Monte Carlo simulation,
+          adjusted expected value computation, and Pareto frontier optimization.
+          v7 roadmap includes causal inference (DoWhy), game-theoretic modeling,
+          and Extreme Value Theory over an 18-month timeline.
+        </div>
+        <div class="fc-stat">
+          12 IDENTIFIED LIMITATIONS → V7 ROADMAP DEFINED
+        </div>
+      </div>
+
+      <!-- EGDS -->
+      <div class="framework-card fc-green">
+        <div class="fc-id">Framework 03</div>
+        <div class="fc-name green">EGDS</div>
+        <div class="fc-full">Execution-Gated Decision System · Temporal Governance</div>
+        <div class="fc-desc">
+          Structures decision implementation through temporal checkpoints at
+          Days 7, 30, 60, and 90. Gates execution based on reversibility windows,
+          ensuring decisions are re-evaluated as new information emerges before
+          irreversibility thresholds are crossed.
+        </div>
+        <div class="fc-stat">
+          CHECKPOINTS: D7 · D30 · D60 · D90
+        </div>
+      </div>
+    </div>
+
+    <!-- Risk Tiers -->
+    <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;">Risk Tiers:</span>
+      <div class="tier-row" style="margin:0;">
+        <span class="tier t-green">GREEN</span>
+        <span class="tier t-yellow">YELLOW</span>
+        <span class="tier t-orange">ORANGE</span>
+        <span class="tier t-red">RED</span>
+        <span class="tier t-critical">CRITICAL</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- LOCKGUARD AI -->
+  <section id="lockguard">
+    <p class="section-tag">Startup · AI Product</p>
+    <h2 class="section-title">LockGuard AI</h2>
+    <p class="section-desc">
+      Enterprise decision intelligence platform built on the SMA-03 / MSCA / EGDS stack.
+    </p>
+
+    <div class="lockguard-hero">
+      <div>
+        <div class="lg-eyebrow">AI-Powered Decision Intelligence</div>
+        <h3 class="lg-name">Lock<span>Guard</span> AI</h3>
+        <p class="lg-desc">
+          LockGuard AI translates three years of proprietary decision science research
+          into an enterprise-grade SaaS platform. It identifies irreversible commitments
+          before they crystallize, quantifies lock-in risk in real time, and gates
+          execution through temporal checkpoints — preventing costly strategic mistakes.
+        </p>
+        <div class="lg-features">
+          <div class="lg-feature">
+            <div class="lg-feature-dot"></div>
+            <span>Real-time II-Score computation across organizational decisions</span>
+          </div>
+          <div class="lg-feature">
+            <div class="lg-feature-dot"></div>
+            <span>Monte Carlo scenario simulation with adjusted expected value output</span>
+          </div>
+          <div class="lg-feature">
+            <div class="lg-feature-dot"></div>
+            <span>Automated EGDS governance checkpoints integrated into workflows</span>
+          </div>
+          <div class="lg-feature">
+            <div class="lg-feature-dot"></div>
+            <span>Crisis perception variable (FD) tracking and early-warning alerts</span>
+          </div>
+          <div class="lg-feature">
+            <div class="lg-feature-dot"></div>
+            <span>Full investor documentation, technical specs, and pitch materials ready</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="lg-metrics">
+          <div class="lg-metric">
+            <div class="lg-metric-val">0–1</div>
+            <div class="lg-metric-label">II-Score Range</div>
+          </div>
+          <div class="lg-metric">
+            <div class="lg-metric-val amber">87.5%</div>
+            <div class="lg-metric-label">Validation Accuracy</div>
+          </div>
+          <div class="lg-metric">
+            <div class="lg-metric-val green">120</div>
+            <div class="lg-metric-label">Decisions Validated</div>
+          </div>
+          <div class="lg-metric">
+            <div class="lg-metric-val white">4</div>
+            <div class="lg-metric-label">Gov. Checkpoints</div>
+          </div>
+        </div>
+
+        <div style="margin-top:1.5rem;padding:1.25rem;background:var(--bg2);border:1px solid var(--border);border-radius:6px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem;">Core Equation</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.8rem;color:var(--accent);line-height:1.8;">
+            E[V]_adjusted<br/>= E[V] / (1 + II²)
+          </div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:var(--muted);margin-top:0.5rem;">
+            FD explains 79% of II-score variance (R²)
+          </div>
+        </div>
+
+        <div style="margin-top:1rem;display:flex;gap:0.75rem;">
+          <a href="#contact" class="btn btn-primary" style="flex:1;text-align:center;">Request Deck</a>
+          <a href="#publications" class="btn btn-ghost" style="flex:1;text-align:center;">Research</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- PUBLICATIONS -->
+  <section id="publications">
+    <p class="section-tag">Academic Output</p>
+    <h2 class="section-title">Research & Publications</h2>
+    <p class="section-desc">
+      Targeting top-tier journals: <em>Journal of Business Research</em>, <em>Organization Science</em>,
+      <em>Academy of Management Review</em>, and <em>Administrative Science Quarterly</em>.
+    </p>
+
+    <div class="pubs-list">
+      <div class="pub-item">
+        <div class="pub-index">01</div>
+        <div>
+          <div class="pub-title">Irreversibility Measurement in Organizational Decision-Making: The SMA-03 Framework</div>
+          <div class="pub-meta">SMA-03 v3 · Empirical Validation · N=120 · ~10,500 words</div>
+        </div>
+        <div class="pub-status s-submitted">Prep / SSRN</div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-index">02</div>
+        <div>
+          <div class="pub-title">Execution-Gated Decision Systems: A Temporal Governance Framework</div>
+          <div class="pub-meta">EGDS · Temporal Checkpoints · Org Science / AMR / ASQ</div>
+        </div>
+        <div class="pub-status s-submitted">In Preparation</div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-index">03</div>
+        <div>
+          <div class="pub-title">Monte Carlo Scenario Analysis for Strategic Option Evaluation: MSCA v6</div>
+          <div class="pub-meta">MSCA v6 · Probabilistic Modeling · Journal of Business Research</div>
+        </div>
+        <div class="pub-status s-prep">In Preparation</div>
+      </div>
+      <div class="pub-item">
+        <div class="pub-index">04</div>
+        <div>
+          <div class="pub-title">SMA-03: An Epistemological Perspective on Organizational Lock-In</div>
+          <div class="pub-meta">SSRN · ArXiv · Corrected PDF available</div>
+        </div>
+        <div class="pub-status s-preprint">Preprint</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- FOOTER -->
+  <footer id="contact">
+    <div class="footer-left">Uberlandis Fiol Reyes</div>
+    <ul class="footer-links">
+      <li><a href="#">SSRN</a></li>
+      <li><a href="#">ArXiv</a></li>
+      <li><a href="#">Substack</a></li>
+      <li><a href="#">Medium</a></li>
+    </ul>
+    <div class="footer-right">Decision Science · Cuba · 2025</div>
+  </footer>
+
+</body>
+</html>
