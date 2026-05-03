@@ -33,7 +33,7 @@
       overflow-x: hidden;
     }
 
-    /* ── GRID NOISE OVERLAY ── */
+    /* overlay de ruido */
     body::before {
       content: '';
       position: fixed;
@@ -45,7 +45,7 @@
       z-index: 0;
     }
 
-    /* ── NAV ── */
+    /* navegación */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -85,7 +85,7 @@
 
     .nav-links a:hover { color: var(--text); }
 
-    /* ── HERO ── */
+    /* hero */
     .hero {
       position: relative;
       z-index: 1;
@@ -179,7 +179,7 @@
       border-color: rgba(255,255,255,0.2);
     }
 
-    /* ── HERO RIGHT: METRICS CARD ── */
+    /* métricas derecha */
     .hero-right {
       display: flex;
       flex-direction: column;
@@ -237,7 +237,7 @@
     .badge-amber { background: rgba(245,158,11,0.15); color: var(--accent2); }
     .badge-green { background: rgba(16,185,129,0.15); color: var(--accent3); }
 
-    /* ── SECTION BASE ── */
+    /* secciones */
     section {
       position: relative;
       z-index: 1;
@@ -274,7 +274,7 @@
       margin: 0;
     }
 
-    /* ── FRAMEWORK GRID ── */
+    /* grid de frameworks */
     .frameworks-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -352,7 +352,7 @@
       padding-top: 1rem;
     }
 
-    /* ── LOCKGUARD FEATURED ── */
+    /* LockGuard AI destacado */
     .lockguard-hero {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -492,7 +492,7 @@
     .t-red { background: rgba(239,68,68,0.15); color: #ef4444; }
     .t-critical { background: rgba(168,85,247,0.15); color: #a855f7; }
 
-    /* ── PUBLICATIONS ── */
+    /* publicaciones */
     .pubs-list {
       display: flex;
       flex-direction: column;
@@ -551,7 +551,7 @@
     .s-preprint { background: rgba(245,158,11,0.15); color: var(--accent2); }
     .s-prep { background: rgba(107,114,128,0.15); color: var(--muted); }
 
-    /* ── FOOTER ── */
+    /* footer */
     footer {
       position: relative;
       z-index: 1;
@@ -593,7 +593,7 @@
 
     .footer-links a:hover { color: var(--text); }
 
-    /* ── ANIMATIONS ── */
+    /* animaciones */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -604,7 +604,6 @@
       to   { opacity: 1; transform: translateX(0); }
     }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       nav { padding: 1rem 1.5rem; }
       .nav-links { gap: 1.5rem; }
@@ -621,7 +620,6 @@
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <div class="nav-logo">UFR / Research</div>
     <ul class="nav-links">
@@ -651,40 +649,20 @@
 
     <div class="hero-right">
       <div class="metric-card">
-        <div>
-          <div class="metric-label">II-Score Validation Accuracy</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:0.75rem;">
-          <span class="metric-value green">87.5%</span>
-          <span class="metric-badge badge-green">N=120</span>
-        </div>
+        <div><div class="metric-label">II‑Score Validation Accuracy</div></div>
+        <div><span class="metric-value green">89%</span><span class="metric-badge badge-green" style="margin-left:0.5rem;">(AUC=0.90)</span></div>
       </div>
       <div class="metric-card">
-        <div>
-          <div class="metric-label">Crisis Perception Variance Explained</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:0.75rem;">
-          <span class="metric-value amber">79%</span>
-          <span class="metric-badge badge-amber">R²</span>
-        </div>
+        <div><div class="metric-label">Decisions Validated</div></div>
+        <div><span class="metric-value blue">138</span><span class="metric-badge badge-blue" style="margin-left:0.5rem;">real‑world cases</span></div>
       </div>
       <div class="metric-card">
-        <div>
-          <div class="metric-label">ML Ensemble Accuracy (SMA-03 v4)</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:0.75rem;">
-          <span class="metric-value blue">97.2%</span>
-          <span class="metric-badge badge-blue">GB Model</span>
-        </div>
+        <div><div class="metric-label">Inter‑rater Reliability (IRR)</div></div>
+        <div><span class="metric-value amber">0.78</span><span class="metric-badge badge-amber" style="margin-left:0.5rem;">Cohen's κ</span></div>
       </div>
       <div class="metric-card">
-        <div>
-          <div class="metric-label">Integrated Frameworks</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:0.75rem;">
-          <span class="metric-value" style="color:var(--text)">3</span>
-          <span class="metric-badge" style="background:rgba(255,255,255,0.07);color:var(--muted)">SMA · MSCA · EGDS</span>
-        </div>
+        <div><div class="metric-label">Reversibility Extension (EGDS)</div></div>
+        <div><span class="metric-value green">150‑200%</span><span class="metric-badge badge-green" style="margin-left:0.5rem;">temporal gates</span></div>
       </div>
     </div>
   </div>
@@ -701,210 +679,47 @@
     </p>
 
     <div class="frameworks-grid">
-      <!-- SMA-03 -->
       <div class="framework-card fc-blue">
         <div class="fc-id">Framework 01</div>
         <div class="fc-name blue">SMA-03 v3</div>
         <div class="fc-full">Irreversibility Index · Lock-in Risk Measurement</div>
         <div class="fc-desc">
-          Quantifies organizational lock-in through the II-Score (0–1 range),
-          five risk tiers, and temporal decay parameter λ. Empirically validated
-          on 120 organizational decisions. Integrates ODE modeling and ML ensemble
-          classification for real-time risk assessment.
+          Quantifies organizational lock‑in through the II‑Score (0–1 range),
+          five risk tiers, and temporal decay. Validated on 138 real‑world decisions
+          (89% accuracy, AUC=0.90). Integrates metaprogram <strong>R</strong> (reality assumption)
+          and crisis perception <strong>F<sub>D</sub></strong> — together explaining 84% of lock‑in variance.
         </div>
-        <div class="fc-stat">
-          KEY FORMULA: E[V]_adjusted = E[V] / (1 + II²)
-        </div>
+        <div class="fc-stat">KEY FORMULA: E[V]_adjusted = E[V] / (1 + II²)</div>
       </div>
 
-      <!-- MSCA v6 -->
       <div class="framework-card fc-amber">
         <div class="fc-id">Framework 02</div>
         <div class="fc-name amber">MSCA v6</div>
         <div class="fc-full">Monte Carlo Scenario Analysis · Option Evaluation</div>
         <div class="fc-desc">
-          Probabilistic option evaluation through Monte Carlo simulation,
-          adjusted expected value computation, and Pareto frontier optimization.
-          v7 roadmap includes causal inference (DoWhy), game-theoretic modeling,
-          and Extreme Value Theory over an 18-month timeline.
+          Probabilistic option evaluation via Monte Carlo simulation,
+          variance‑penalized utility <code>U(a) = E[R(a)] - 2·Var[R(a)]</code>,
+          and Pareto frontier optimization. Roadmap includes causal inference (DoWhy)
+          and Extreme Value Theory.
         </div>
-        <div class="fc-stat">
-          12 IDENTIFIED LIMITATIONS → V7 ROADMAP DEFINED
-        </div>
+        <div class="fc-stat">12 identified limitations → v7 roadmap defined</div>
       </div>
 
-      <!-- EGDS -->
       <div class="framework-card fc-green">
         <div class="fc-id">Framework 03</div>
         <div class="fc-name green">EGDS</div>
-        <div class="fc-full">Execution-Gated Decision System · Temporal Governance</div>
+        <div class="fc-full">Execution‑Gated Decision System · Temporal Governance</div>
         <div class="fc-desc">
-          Structures decision implementation through temporal checkpoints at
-          Days 7, 30, 60, and 90. Gates execution based on reversibility windows,
-          ensuring decisions are re-evaluated as new information emerges before
-          irreversibility thresholds are crossed.
+          Structures decision implementation through checkpoints at Days 7, 30, 60, and 90.
+          An entropy gate (<em>θ<sub>max</sub> = 1.2 nats</em>) suppresses irreversible actions
+          when policy uncertainty exceeds the threshold. Extends reversibility windows by 150‑200%.
         </div>
-        <div class="fc-stat">
-          CHECKPOINTS: D7 · D30 · D60 · D90
-        </div>
+        <div class="fc-stat">D7 · D30 · D60 · D90</div>
       </div>
     </div>
 
-    <!-- Risk Tiers -->
-    <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;">Risk Tiers:</span>
-      <div class="tier-row" style="margin:0;">
-        <span class="tier t-green">GREEN</span>
-        <span class="tier t-yellow">YELLOW</span>
-        <span class="tier t-orange">ORANGE</span>
-        <span class="tier t-red">RED</span>
-        <span class="tier t-critical">CRITICAL</span>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider" />
-
-  <!-- LOCKGUARD AI -->
-  <section id="lockguard">
-    <p class="section-tag">Startup · AI Product</p>
-    <h2 class="section-title">LockGuard AI</h2>
-    <p class="section-desc">
-      Enterprise decision intelligence platform built on the SMA-03 / MSCA / EGDS stack.
-    </p>
-
-    <div class="lockguard-hero">
+    <!-- LOCKGUARD AI FEATURED SECTION -->
+    <div id="lockguard" class="lockguard-hero">
       <div>
-        <div class="lg-eyebrow">AI-Powered Decision Intelligence</div>
-        <h3 class="lg-name">Lock<span>Guard</span> AI</h3>
-        <p class="lg-desc">
-          LockGuard AI translates three years of proprietary decision science research
-          into an enterprise-grade SaaS platform. It identifies irreversible commitments
-          before they crystallize, quantifies lock-in risk in real time, and gates
-          execution through temporal checkpoints — preventing costly strategic mistakes.
-        </p>
-        <div class="lg-features">
-          <div class="lg-feature">
-            <div class="lg-feature-dot"></div>
-            <span>Real-time II-Score computation across organizational decisions</span>
-          </div>
-          <div class="lg-feature">
-            <div class="lg-feature-dot"></div>
-            <span>Monte Carlo scenario simulation with adjusted expected value output</span>
-          </div>
-          <div class="lg-feature">
-            <div class="lg-feature-dot"></div>
-            <span>Automated EGDS governance checkpoints integrated into workflows</span>
-          </div>
-          <div class="lg-feature">
-            <div class="lg-feature-dot"></div>
-            <span>Crisis perception variable (FD) tracking and early-warning alerts</span>
-          </div>
-          <div class="lg-feature">
-            <div class="lg-feature-dot"></div>
-            <span>Full investor documentation, technical specs, and pitch materials ready</span>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="lg-metrics">
-          <div class="lg-metric">
-            <div class="lg-metric-val">0–1</div>
-            <div class="lg-metric-label">II-Score Range</div>
-          </div>
-          <div class="lg-metric">
-            <div class="lg-metric-val amber">87.5%</div>
-            <div class="lg-metric-label">Validation Accuracy</div>
-          </div>
-          <div class="lg-metric">
-            <div class="lg-metric-val green">120</div>
-            <div class="lg-metric-label">Decisions Validated</div>
-          </div>
-          <div class="lg-metric">
-            <div class="lg-metric-val white">4</div>
-            <div class="lg-metric-label">Gov. Checkpoints</div>
-          </div>
-        </div>
-
-        <div style="margin-top:1.5rem;padding:1.25rem;background:var(--bg2);border:1px solid var(--border);border-radius:6px;">
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem;">Core Equation</div>
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.8rem;color:var(--accent);line-height:1.8;">
-            E[V]_adjusted<br/>= E[V] / (1 + II²)
-          </div>
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.6rem;color:var(--muted);margin-top:0.5rem;">
-            FD explains 79% of II-score variance (R²)
-          </div>
-        </div>
-
-        <div style="margin-top:1rem;display:flex;gap:0.75rem;">
-          <a href="#contact" class="btn btn-primary" style="flex:1;text-align:center;">Request Deck</a>
-          <a href="#publications" class="btn btn-ghost" style="flex:1;text-align:center;">Research</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider" />
-
-  <!-- PUBLICATIONS -->
-  <section id="publications">
-    <p class="section-tag">Academic Output</p>
-    <h2 class="section-title">Research & Publications</h2>
-    <p class="section-desc">
-      Targeting top-tier journals: <em>Journal of Business Research</em>, <em>Organization Science</em>,
-      <em>Academy of Management Review</em>, and <em>Administrative Science Quarterly</em>.
-    </p>
-
-    <div class="pubs-list">
-      <div class="pub-item">
-        <div class="pub-index">01</div>
-        <div>
-          <div class="pub-title">Irreversibility Measurement in Organizational Decision-Making: The SMA-03 Framework</div>
-          <div class="pub-meta">SMA-03 v3 · Empirical Validation · N=120 · ~10,500 words</div>
-        </div>
-        <div class="pub-status s-submitted">Prep / SSRN</div>
-      </div>
-      <div class="pub-item">
-        <div class="pub-index">02</div>
-        <div>
-          <div class="pub-title">Execution-Gated Decision Systems: A Temporal Governance Framework</div>
-          <div class="pub-meta">EGDS · Temporal Checkpoints · Org Science / AMR / ASQ</div>
-        </div>
-        <div class="pub-status s-submitted">In Preparation</div>
-      </div>
-      <div class="pub-item">
-        <div class="pub-index">03</div>
-        <div>
-          <div class="pub-title">Monte Carlo Scenario Analysis for Strategic Option Evaluation: MSCA v6</div>
-          <div class="pub-meta">MSCA v6 · Probabilistic Modeling · Journal of Business Research</div>
-        </div>
-        <div class="pub-status s-prep">In Preparation</div>
-      </div>
-      <div class="pub-item">
-        <div class="pub-index">04</div>
-        <div>
-          <div class="pub-title">SMA-03: An Epistemological Perspective on Organizational Lock-In</div>
-          <div class="pub-meta">SSRN · ArXiv · Corrected PDF available</div>
-        </div>
-        <div class="pub-status s-preprint">Preprint</div>
-      </div>
-    </div>
-  </section>
-
-  <hr class="divider" />
-
-  <!-- FOOTER -->
-  <footer id="contact">
-    <div class="footer-left">Uberlandis Fiol Reyes</div>
-    <ul class="footer-links">
-      <li><a href="#">SSRN</a></li>
-      <li><a href="#">ArXiv</a></li>
-      <li><a href="#">Substack</a></li>
-      <li><a href="#">Medium</a></li>
-    </ul>
-    <div class="footer-right">Decision Science · Cuba · 2025</div>
-  </footer>
-
-</body>
-</html>
+        <div class="lg-eyebrow">Enterprise decision intelligence</div>
+        <d es
